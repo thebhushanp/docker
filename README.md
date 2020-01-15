@@ -17,9 +17,10 @@ docker rm containerid
 docker rmi imageName
 
 ### format of Dockerfile
-FROM anapsix/alpine-java
-MAINTAINER bhushanp
-COPY badam7-0.0.1-SNAPSHOT.jar /home/badam7-0.0.1-SNAPSHOT.jar
-CMD ["java","-jar","/home/badam7-0.0.1-SNAPSHOT.jar"]
-expose 8888 ### only used for inter-container communication
+FROM anapsix/alpine-java  
+MAINTAINER bhushanp  
+COPY badam7-0.0.1-SNAPSHOT.jar /home/badam7-0.0.1-SNAPSHOT.jar  
+CMD ["java","-jar","/home/badam7-0.0.1-SNAPSHOT.jar"]  
+expose 8888 ### only used for inter-container communication  
 
+ 

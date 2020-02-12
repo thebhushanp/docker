@@ -33,6 +33,14 @@ expose 8888 ### only used for inter-container communication
 -- docker volume ls
 - To delete volume
 -- docker volume prune
+- If you want to remove a single volume you can do so by typing:
+-- docker volume rm [name of volume]
+- See more details on our created volume and probably most important where it will place the persisted files.
+-- docker inspect [name of volume]
+- To mount volume to app
+-- docker run -d -p 8000:3000 --name my-container --volume my-volume:/logs chrisnoring/node
+(-v, —-volume, the syntax looks like the following -v [name of volume]:[directory in the container], for example -v my-volume:/app)
+
 
 ### Integration with Nexus
 

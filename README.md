@@ -25,3 +25,12 @@ MAINTAINER bhushanp
 COPY badam7-0.0.1-SNAPSHOT.jar /home/badam7-0.0.1-SNAPSHOT.jar  
 CMD ["java","-jar","/home/badam7-0.0.1-SNAPSHOT.jar"]  
 expose 8888 ### only used for inter-container communication  
+
+
+### Integration with Nexus
+
+### Update Docker App(ie image)
+- Bring down the container(docker stop container_name)
+- remove it (docker rm container_name)
+- rebuild the image (docker build -t imagename)
+- run the container again. (docker run -d --name container_name -p 8888:8888 image_name)

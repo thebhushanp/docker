@@ -5,7 +5,7 @@ docker build -t imgname .
 docker run --name container_name imgname --bind 127.0.0.1
 
 ### run container with port
-docker run -d --name container_name -p 8888:8888 image_name
+docker run -d --name container_name -p 8888:8888 img_name
 
 ### run container with autostart flag
 docker run -d --name container_name -p 8888:8888 --restart unless-stopped image_name

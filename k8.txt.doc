@@ -1,0 +1,67 @@
+Log mngment
+Res mngment(CPU/RAM)
+External config -> etcd
+Alerting/monitoring -> Prometheus
+Jenkins pipeline
+Deployment
+	Rolling update
+	Canary deployment
+	Blue/green deployment
+Multi technology microservices
+Docker auto deployment using DockerHub build
+
+Demo
+	- What it is
+	- 
+	
+	
+ToDo
+	buildon in dockerfile
+	how to use dockerhub's auto-build alternative to nexus
+	
+	
+	
+#To force delete
+docker rmi -f imagename/imageid
+
+#push to dockerhub
+1. create a image
+docker build -t myimagename .
+2. tag the image
+docker tag imageid dockerhub_username/dockerhub_repo_name:tag
+3. push the image to DH
+docker push dockerhub_username/dockerhub_repo_name:tag
+
+#To run container and delete afterward
+docker run --rm -p 8888:8888 thebhushanp/k8:firsttry
+
+#No cache option while building the image
+docker build --no-cache -t myimagename
+
+# microk8s
+sudo snap install microk8s --classic
+# add addons
+microk8s.enable dns
+microk8s.enable dashboard
+microk8s.enable ingress
+
+#access dashboard
+microk8s.kubectl proxy --accept-hosts=.* --address=0.0.0.0
+microk8s.kubectl proxy --accept-hosts=.* --address=0.0.0.0 & (if want to run in backgroud)
+- to proxy dashboard to localhost
+netsh interface portproxy add v4tov4 listenport=8001 listenaddress=127.0.0.1 connectport=8001 connectaddress=34.67.40.96
+- get secret
+token=$(microk8s.kubectl -n kube-system get secret | grep default-token | cut -d " " -f1)
+microk8s.kubectl -n kube-system describe secret $token
+
+#create deployment
+microk8s.kubectl create deployment microbot --image=dontrebootme/microbot:v1
+microk8s.kubectl scale deployment microbot --replicas=2
+
+#create service
+microk8s.kubectl expose deployment microbot --type=NodePort --port=80 --name=microbot-service
+
+
+
+http://34.67.40.96:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/
+microk8s.kubectl expose deployment microbot --type=NodePort --port=8888 --name=microbot-service

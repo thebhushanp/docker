@@ -58,11 +58,45 @@ microk8s.kubectl -n kube-system describe secret $token
 microk8s.kubectl create deployment microbot --image=dontrebootme/microbot:v1
 microk8s.kubectl scale deployment microbot --replicas=2
 
+# to update deployment
+microk8s.kubectl scale deployment microbot --replicas=0
+microk8s.kubectl scale deployment microbot --replicas=1
+
+
 #create service
 microk8s.kubectl expose deployment microbot --type=NodePort --port=80 --name=microbot-service
 
+# readyness prob
+    spec:
+      containers:
+        - name: k8
+          image: 'thebhushanp/k8:ft1.0.1'
+          resources: {}
+          readinessProbe:
+            httpGet:
+              path: /api/hello
+              port: 8888
+              scheme: HTTP
+            initialDelaySeconds: 15
+            timeoutSeconds: 2
+            periodSeconds: 3
+            successThreshold: 1
+            failureThreshold: 1
 
 
-http://34.67.40.96:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/
+
+# load testing
+apt-get install apache2-utils
+ab -n 100 -c 10  http://127.0.0.1:8080/hello
+
+??? rolling update
+??? rollback
+??? access service on same port(proper gateway)
+??? health monitoring(dont send trafic to this app unless in spring boot) ?
+
+
+
 http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#/login
 microk8s.kubectl expose deployment microbot --type=NodePort --port=8888 --name=microbot-service
+
+microk8s.kubectl --record deployment.apps/microbot set image deployment.v1.apps/microbot microbot=thebhushanp/k8:firsttry

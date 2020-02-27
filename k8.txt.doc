@@ -100,3 +100,6 @@ http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-da
 microk8s.kubectl expose deployment microbot --type=NodePort --port=8888 --name=microbot-service
 
 microk8s.kubectl --record deployment.apps/microbot set image deployment.v1.apps/microbot microbot=thebhushanp/k8:firsttry
+
+https://learnk8s.io/kubernetes-rollbacks
+https://learnk8s.io/kubernetes-ingress-api-gateway

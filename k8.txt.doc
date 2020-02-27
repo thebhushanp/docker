@@ -103,3 +103,4 @@ microk8s.kubectl --record deployment.apps/microbot set image deployment.v1.apps/
 
 https://learnk8s.io/kubernetes-rollbacks
 https://learnk8s.io/kubernetes-ingress-api-gateway
+https://dimitr.im/spring-boot-kubernetes

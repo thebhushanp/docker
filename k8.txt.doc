@@ -86,8 +86,13 @@ microk8s.kubectl get all --all-namespaces
             periodSeconds: 3
             successThreshold: 1
             failureThreshold: 1
-
-
+## rollback
+- get history
+	microk8s.kubectl rollout history deployment.apps/microbot
+- Rollback to the previous deployed version
+	microk8s.kubectl rollout undo deployment.apps/microbot
+- Rollback to a specific previously deployed version
+	microk8s.kubectl rollout undo deployment.apps/microbot --to-revision 21
 
 # load testing
 apt-get install apache2-utils

@@ -50,6 +50,7 @@ microk8s.kubectl proxy --accept-hosts=.* --address=0.0.0.0
 microk8s.kubectl proxy --accept-hosts=.* --address=0.0.0.0 & (if want to run in backgroud)
 - to proxy dashboard to localhost
 netsh interface portproxy add v4tov4 listenport=8001 listenaddress=127.0.0.1 connectport=8001 connectaddress=34.67.40.96
+ssh -L 8001:127.0.0.1:8001 192.0.2.10 (for Linux)
 - get secret
 token=$(microk8s.kubectl -n kube-system get secret | grep default-token | cut -d " " -f1)
 microk8s.kubectl -n kube-system describe secret $token
@@ -65,6 +66,9 @@ microk8s.kubectl scale deployment microbot --replicas=1
 
 #create service
 microk8s.kubectl expose deployment microbot --type=NodePort --port=80 --name=microbot-service
+
+# get all resource
+microk8s.kubectl get all --all-namespaces
 
 # readyness prob
     spec:
@@ -100,6 +104,7 @@ http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-da
 microk8s.kubectl expose deployment microbot --type=NodePort --port=8888 --name=microbot-service
 
 microk8s.kubectl --record deployment.apps/microbot set image deployment.v1.apps/microbot microbot=thebhushanp/k8:firsttry
+
 
 https://learnk8s.io/kubernetes-rollbacks
 https://learnk8s.io/kubernetes-ingress-api-gateway

@@ -16,6 +16,6 @@ public class RestCon {
 
 	@GetMapping("/api/hello")
 	public String joinRandGame() {
-		return "H0000\n";
+		return "Bhushinnnnnnnn\n";
 	}
 }

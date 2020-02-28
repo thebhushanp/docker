@@ -98,11 +98,12 @@ microk8s.kubectl get all --all-namespaces
 apt-get install apache2-utils
 ab -n 100 -c 10  http://127.0.0.1:8080/hello
 
-??? rolling update
-??? rollback
+??? rolling update(done)
+??? rollback(done)
 ??? access service on same port(proper gateway)
 ??? health monitoring(dont send trafic to this app unless in spring boot) ?
-
+??? autoscale
+??? autobuild in dockerhub
 
 
 http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#/login

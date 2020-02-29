@@ -20,8 +20,10 @@ COPY ./src ./src
 
 # build for release
 # NOTE: my-project-* should be replaced with the proper prefix
-RUN mvn package && cp target/badam7-0.0.1-SNAPSHOT.jar app.jar
-
+RUN mvn package -Dmaven.test.skip=true
+RUN ls target/
+RUN cp target/badam7-0.0.1-SNAPSHOT.jar app.jar
+RUN ls /app
 
 # smaller, final base image
 FROM openjdk:8u171-jre-alpine

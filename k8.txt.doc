@@ -116,3 +116,26 @@ microk8s.kubectl --record deployment.apps/microbot set image deployment.v1.apps/
 https://learnk8s.io/kubernetes-rollbacks
 https://learnk8s.io/kubernetes-ingress-api-gateway
 https://dimitr.im/spring-boot-kubernetes
+
+# enable ingress
+microk8s.kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/mandatory.yaml
+
+ingress.yml
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: k8s-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:       
+  rules:
+    - http:
+        paths:
+          - path: /en(/|$)(.*)
+            backend:
+              serviceName: d1-service
+              servicePort: 8888
+          - path: /es(/|$)(.*)
+            backend:
+              serviceName: d2-service
+              servicePort: 8888

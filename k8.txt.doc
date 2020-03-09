@@ -108,6 +108,9 @@ ab -n 100 -c 10  http://127.0.0.1:8080/hello
 ??? config(external)
 ??? cluster health,charts, notification if service not working or 500
 ??? Helm
+??? how to set profile to docker image
+??? access host's DB
+??? write logs to volume
 
 http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#/login
 microk8s.kubectl expose deployment microbot --type=NodePort --port=8888 --name=microbot-service

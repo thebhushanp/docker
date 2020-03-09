@@ -121,6 +121,7 @@ microk8s.kubectl --record deployment.apps/microbot set image deployment.v1.apps/
 https://learnk8s.io/kubernetes-rollbacks
 https://learnk8s.io/kubernetes-ingress-api-gateway
 https://dimitr.im/spring-boot-kubernetes
+https://medium.com/faun/using-kubernetes-secrets-as-environment-variables-5ea3ef7581ef
 
 # enable ingress
 microk8s.kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/mandatory.yaml

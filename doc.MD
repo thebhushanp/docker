@@ -72,7 +72,7 @@ expose 8888 ### only used for inter-container communication
 	}
 	```
 
-#### Push the image to repo
+### Push the image to repo
 #### First tag the image 
 	docker tag {image_id/imagenamge} nexus_ip:nexus_port_of_private_repo/repo_for_img:tag 
 	docker tag 2d01ec6570c5/imagename 10.1.3.25:8890/myrepo:latest 
@@ -150,7 +150,7 @@ expose 8888 ### only used for inter-container communication
 #### Create service
 	microk8s.kubectl expose deployment microbot --type=NodePort --port=8888 --name=microbot-service(port 8888 is of the deployment)
 	
-#### Rollback deployment
+### Rollback deployment
 #### Get history
 	microk8s.kubectl rollout history deployment.apps/microbot
 #### Rollback to the previous deployed version
@@ -160,7 +160,7 @@ expose 8888 ### only used for inter-container communication
 
 ####  Ingress
 #### sample of ingress.yml
-#### ingress.yml
+` ingress.yml`
 ```
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -184,8 +184,8 @@ spec:
 #### Enable ingress
 	microk8s.kubectl apply -f ingress.yml
 
-#### Set Spring profile to docker image
-#### In deployment.yml
+### Set Spring profile to docker image
+` In deployment.yml`
 ```
 spec:
   replicas: 1
@@ -248,10 +248,10 @@ spec:
             - postgres
             - postgresql
 ```
-#### In application-k8s.yml
-	jdbc:postgresql://postgresql:5432/legaldb
-#### In /etc/postgresql/10/main/pg_hba.conf
-	host    all             all             10.1.7.1/24            md5
+` In application-k8s.yml`
+`	jdbc:postgresql://postgresql:5432/legaldb`
+` In /etc/postgresql/10/main/pg_hba.conf`
+`	host    all             all             10.1.7.1/24            md5`
 
 #### Check logs of pod
 	tail -f /var/log/container/nameOfThePod

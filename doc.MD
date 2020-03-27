@@ -8,34 +8,34 @@ expose 8888 ### only used for inter-container communication
 ```
 
 
-Build image 
+#### Build image 
 	docker build -t imgname . 
 
-Run container 
+#### Run container 
 	docker run --name container_name imgname --bind 127.0.0.1 
 
-Run container with port 
+#### Run container with port 
 	docker run -d --name container_name -p 8888:8888 image_name 
 
-Run container with autostart flag 
+#### Run container with autostart flag 
 	docker run -d --name container_name -p 8888:8888 --restart unless-stopped image_name 
 
-Start/Stop/Restart the container 
+#### Start/Stop/Restart the container 
 	docker restart container_name 
 
-List images
+#### List images
 	docker images
 
-Remove image from docker 
+#### Remove image from docker 
 	docker rmi imageName
 
-Remove image(forcefully)
+#### Remove image(forcefully)
 	docker rmi -f imagename/imageid
 
-List containers
+#### List containers
 	docker containers list
 
-Remove container 
+#### Remove container 
 	docker rm containerid 
 
 ## Volume 

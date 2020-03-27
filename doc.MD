@@ -1,9 +1,11 @@
 ### Format of Dockerfile 
+```
 FROM anapsix/alpine-java 
 MAINTAINER bhushanp 
 COPY myapp.jar /home/myapp.jar 
 CMD ["java","-jar","/home/myapp.jar"] 
 expose 8888 ### only used for inter-container communication
+```
 
 
 Build image 

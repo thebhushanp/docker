@@ -55,8 +55,8 @@ expose 8888 ### only used for inter-container communication
 	docker inspect [name of volume]  
 
 #### To mount volume to app
-	docker run -d -p 8000:3000 --name my-container --volume my-volume:/logs chrisnoring/node 
-		(-v, —-volume, the syntax looks like the following -v [name of volume]:[directory in the container], for example -v my-volume:/app)  
+	docker run -d -p 8000:3000 --name my-container --volume my-volume:/logs chrisnoring/node
+	(-v [name of volume]:[directory in the container], for example -v my-volume:/app)  
 
 ## Integration with Nexus 
 ### Add Nexus’s private repo’s ip:port to /etc/docker/daemon.json’s insecure-registries & registry-mirrors fields ex.
@@ -109,8 +109,11 @@ expose 8888 ### only used for inter-container communication
 	microk8s.kubectl proxy --accept-hosts=.* --address=0.0.0.0 & (if want to run in backgroud)
 
 #### To proxy dashboard to localhost(dashboard only works if it accessed from localhost)
-	netsh interface portproxy add v4tov4 listenport=8001 listenaddress=127.0.0.1 connectport=8001 connectaddress=34.67.40.96(for windows)
-	ssh -L 8001:127.0.0.1:8001 192.0.2.10 (for Linux)
+##### Windows
+	netsh interface portproxy add v4tov4 listenport=8001 
+		listenaddress=127.0.0.1 connectport=8001 connectaddress=34.67.40.96
+##### Linux
+	ssh -L 8001:127.0.0.1:8001 192.0.2.10
 
 #### URL of dashboard
 	http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#/login
@@ -148,7 +151,8 @@ expose 8888 ### only used for inter-container communication
 ```
 
 #### Create service
-	microk8s.kubectl expose deployment microbot --type=NodePort --port=8888 --name=microbot-service(port 8888 is of the deployment)
+	microk8s.kubectl expose deployment microbot --type=NodePort
+		--port=8888 --name=microbot-service(port 8888 is of the deployment)
 	
 ### Rollback deployment
 #### Get history

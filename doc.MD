@@ -59,7 +59,7 @@ expose 8888 ### only used for inter-container communication
 		(-v, —-volume, the syntax looks like the following -v [name of volume]:[directory in the container], for example -v my-volume:/app)  
 
 ## Integration with Nexus 
-#### Add Nexus’s private repo’s ip:port to /etc/docker/daemon.json’s insecure-registries & registry-mirrors fields ex.
+### Add Nexus’s private repo’s ip:port to /etc/docker/daemon.json’s insecure-registries & registry-mirrors fields ex.
 	```
 	/etc/docker/daemon.json
 	{
@@ -70,7 +70,8 @@ expose 8888 ### only used for inter-container communication
 			"http://192.168.1.10/nexus/repository/docker-group"
 		]
 	}
-```
+	```
+
 #### Push the image to repo
 #### First tag the image 
 	docker tag {image_id/imagenamge} nexus_ip:nexus_port_of_private_repo/repo_for_img:tag 

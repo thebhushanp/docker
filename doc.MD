@@ -39,28 +39,28 @@ expose 8888 ### only used for inter-container communication
 	docker rm containerid 
 
 ## Volume 
-To create a volume
+#### To create a volume
 	docker volume create [name of volume]  
 
-To verify volume
+#### To verify volume
 	docker volume ls  
 
-To delete volume
+#### To delete volume
 	docker volume prune  
 
-Remove a single volume
+#### Remove a single volume
 	docker volume rm [name of volume]  
 
-See more details on our created volume and probably most important where it will place the persisted files. 
+#### See more details on our created volume and probably most important where it will place the persisted files. 
 	docker inspect [name of volume]  
 
-To mount volume to app
+#### To mount volume to app
 	docker run -d -p 8000:3000 --name my-container --volume my-volume:/logs chrisnoring/node 
 		(-v, —-volume, the syntax looks like the following -v [name of volume]:[directory in the container], for example -v my-volume:/app)  
 
-Integration with Nexus 
-Add Nexus’s private repo’s ip:port to /etc/docker/daemon.json’s insecure-registries & registry-mirrors fields
-ex.
+## Integration with Nexus 
+#### Add Nexus’s private repo’s ip:port to /etc/docker/daemon.json’s insecure-registries & registry-mirrors fields ex.
+	```
 	/etc/docker/daemon.json
 	{
 		"insecure-registries": [
@@ -70,64 +70,65 @@ ex.
 			"http://192.168.1.10/nexus/repository/docker-group"
 		]
 	}
-
-## Push the image to repo
-First tag the image 
+```
+#### Push the image to repo
+#### First tag the image 
 	docker tag {image_id/imagenamge} nexus_ip:nexus_port_of_private_repo/repo_for_img:tag 
 	docker tag 2d01ec6570c5/imagename 10.1.3.25:8890/myrepo:latest 
 
-Push the image 
+#### Push the image 
 	docker push  nexus_ip:nexus_port_of_private_repo/repo_for_img:tag 
 
-Pull the image
+#### Pull the image
 	docker pull nexus_ip:nexus_port_of_private_repo/repo_for_img:tag 
 
-Bring down the container
+#### Bring down the container
 	docker stop container_name
 
-Remove the container
+#### Remove the container
 	docker rm container_name
 
-Rebuild the image 
+#### Rebuild the image 
 	docker build -t imagename
 
-Run the container again
+#### Run the container again
 	docker run -d --name container_name -p 8888:8888 image_name
 
 ## Kubernetes
-How to install single node cluster(choices - microk8s & minikube, selected - straightforward installation process for Ubuntu)
+#### How to install single node cluster(choices - microk8s & minikube, selected - straightforward installation process for Ubuntu)
 	sudo snap install microk8s --classic
 
-Add addon to microk8s(order sequence is important)
+#### Add addon to microk8s(order sequence is important)
 	microk8s.enable dns
 	microk8s.enable dashboard
 	microk8s.enable ingress
 
-Access dashboard of microk8s(if microk8s is installed on some other VM)
+#### Access dashboard of microk8s(if microk8s is installed on some other VM)
 	microk8s.kubectl proxy --accept-hosts=.* --address=0.0.0.0
 	microk8s.kubectl proxy --accept-hosts=.* --address=0.0.0.0 & (if want to run in backgroud)
 
-To proxy dashboard to localhost(dashboard only works if it accessed from localhost)
+#### To proxy dashboard to localhost(dashboard only works if it accessed from localhost)
 	netsh interface portproxy add v4tov4 listenport=8001 listenaddress=127.0.0.1 connectport=8001 connectaddress=34.67.40.96(for windows)
 	ssh -L 8001:127.0.0.1:8001 192.0.2.10 (for Linux)
 
-URL of dashboard
+#### URL of dashboard
 	http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#/login
 
 
-Get secret(dashboard needs password, which can be got from following command)
+#### Get secret(dashboard needs password, which can be got from following command)
 	token=$(microk8s.kubectl -n kube-system get secret | grep default-token | cut -d " " -f1)
 	microk8s.kubectl -n kube-system describe secret $token
 
-Create plain vanilla deployment
+#### Create plain vanilla deployment
 	microk8s.kubectl create deployment microbot --image=dontrebootme/microbot:v1
 	microk8s.kubectl scale deployment microbot --replicas=2
 
-Update deployment(scale up and scale down)
+#### Update deployment(scale up and scale down)
 	microk8s.kubectl scale deployment microbot --replicas=0
 	microk8s.kubectl scale deployment microbot --replicas=1
 
-Add readyness prob(needed to know k8s if deployment is ready to serve requests)
+#### Add readyness prob(needed to know k8s if deployment is ready to serve requests)
+```
     spec:
       containers:
         - name: k8
@@ -143,21 +144,23 @@ Add readyness prob(needed to know k8s if deployment is ready to serve requests)
             periodSeconds: 3
             successThreshold: 1
             failureThreshold: 1
+```
 
-Create service
+#### Create service
 	microk8s.kubectl expose deployment microbot --type=NodePort --port=8888 --name=microbot-service(port 8888 is of the deployment)
 	
-Rollback deployment
-Get history
+#### Rollback deployment
+#### Get history
 	microk8s.kubectl rollout history deployment.apps/microbot
-Rollback to the previous deployed version
+#### Rollback to the previous deployed version
 	microk8s.kubectl rollout undo deployment.apps/microbot
-Rollback to a specific previously deployed version
+#### Rollback to a specific previously deployed version
 	microk8s.kubectl rollout undo deployment.apps/microbot --to-revision 21
 
-Ingress
-sample of ingress.yml
-ingress.yml
+####  Ingress
+#### sample of ingress.yml
+#### ingress.yml
+```
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -176,12 +179,13 @@ spec:
             backend:
               serviceName: d2-service
               servicePort: 8888
-
-Enable ingress
+```
+#### Enable ingress
 	microk8s.kubectl apply -f ingress.yml
 
-Set Spring profile to docker image
-In deployment.yml
+#### Set Spring profile to docker image
+#### In deployment.yml
+```
 spec:
   replicas: 1
   selector:
@@ -201,11 +205,13 @@ spec:
               protocol: TCP
           env:
             - name: '--spring.profiles.active'
-              value: k8s	
-In spring-boot project create application-k8s.yml profile.
+              value: k8s
+```
+`In spring-boot project create application-k8s.yml profile.`
 
-Access host's DB
-In deployment.yml
+#### Access host's DB
+`In deployment.yml`
+```
 spec:
   replicas: 1
   selector:
@@ -240,15 +246,16 @@ spec:
           hostnames:
             - postgres
             - postgresql
-In application-k8s.yml
+```
+#### In application-k8s.yml
 	jdbc:postgresql://postgresql:5432/legaldb
-In /etc/postgresql/10/main/pg_hba.conf
+#### In /etc/postgresql/10/main/pg_hba.conf
 	host    all             all             10.1.7.1/24            md5
 
-Check logs of pod
+#### Check logs of pod
 	tail -f /var/log/container/nameOfThePod
 
-Pending task
+## Pending task
 1. Log management
 2. Resource management(CPU/Memory)
 3. Externalization of  config -> etcd/secrets

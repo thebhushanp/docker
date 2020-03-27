@@ -248,10 +248,10 @@ spec:
             - postgres
             - postgresql
 ```
-` In application-k8s.yml`
-`	jdbc:postgresql://postgresql:5432/legaldb`
-` In /etc/postgresql/10/main/pg_hba.conf`
-`	host    all             all             10.1.7.1/24            md5`
+
+` In application-k8s.yml -> jdbc:postgresql://postgresql:5432/legaldb`
+
+` In /etc/postgresql/10/main/pg_hba.conf -> host    all             all             10.1.7.1/24            md5`
 
 #### Check logs of pod
 	tail -f /var/log/container/nameOfThePod

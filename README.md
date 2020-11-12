@@ -49,3 +49,13 @@ expose 8888 ### only used for inter-container communication
 - remove it (docker rm container_name)
 - rebuild the image (docker build -t imagename)
 - run the container again. (docker run -d --name container_name -p 8888:8888 image_name)
+
+
+
+$headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
+$headers.Add("Content-Type", "application/x-www-form-urlencoded")
+
+$body = "sess=dsfadssafsd&empid=%22a%22"
+
+$response = Invoke-RestMethod 'kotak-staging.mobcast.in/external/validate/token' -Method 'POST' -Headers $headers -Body $body
+$response | ConvertTo-Json
